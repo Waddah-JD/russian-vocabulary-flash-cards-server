@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule as BaseConfigModule } from '@nestjs/config';
 
-import { ConfigService } from './service';
+import { ZConfigService } from './service';
 
 @Module({
   imports: [BaseConfigModule.forRoot({ envFilePath: ['.env'] })],
-  providers: [ConfigService],
-  exports: [ConfigService],
+  providers: [ZConfigService],
+  exports: [ZConfigService],
 })
 export class ConfigModule {}
