@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: main
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - russian_vocabulary_flash_cards_dev_db:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  russian_vocabulary_flash_cards_dev_db:
