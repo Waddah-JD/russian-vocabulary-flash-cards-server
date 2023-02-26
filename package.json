@@ -25,12 +25,8 @@
     "env:test:down": "docker-compose -f docker-compose.test.yml down",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "db:migration:generate": "yarn typeorm migration:generate src/database/migrations/$FILE_NAME -d src/database/config.ts",
-    "db:migration:run": "yarn typeorm migration:run -d src/database/config.ts"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn format && yarn lint"
-    }
+    "db:migration:run": "yarn typeorm migration:run -d src/database/config.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -57,7 +53,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "jest": "29.3.1",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
