@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# a work-around to add automatically formatted files form pre-commit
+git add .
+git commit --amend -C HEAD --no-verify
