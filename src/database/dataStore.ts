@@ -12,12 +12,10 @@ function getDataStoreFactory(
     username: configService.getConfig().db.username,
     password: configService.getConfig().db.password,
     database: configService.getConfig().db.name,
-    entities: [join(__dirname, '..', '..', 'modules', '**', 'entities.ts')],
+    entities: [join(__dirname, '..', 'modules', '**', 'entities.ts')],
     migrationsTableName: 'migrations',
-    migrationsRun: true,
-    migrations: [
-      join(__dirname, '..', '..', 'modules', 'database', 'migrations', '**/*'),
-    ],
+    migrationsRun: false,
+    migrations: [join(__dirname, 'migrations', '**/*')],
     synchronize: false,
     autoLoadEntities: true,
   };

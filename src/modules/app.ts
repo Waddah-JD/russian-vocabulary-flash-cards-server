@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
+import { DatabaseModule } from '../database';
 import { ConfigModule } from './config';
-import { DatabaseModule } from './database';
 import { HealthCheckModule } from './health-check';
 import { WordTypesModule } from './word-types';
 
