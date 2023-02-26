@@ -16,6 +16,7 @@ export class CreateWordTypes1677424898914 implements MigrationInterface {
     await queryRunner.query(
       `DROP INDEX "public"."IDX_de36e6f1e463de71dac56d4c4f"`,
     );
+
     await queryRunner.query(`DROP TABLE "word_types"`);
   }
 }
