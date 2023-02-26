@@ -1,3 +1,4 @@
+import { DatabaseModule } from '@modules/database';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { HealthCheckController } from './controller';
@@ -5,9 +6,11 @@ import { HealthCheckService } from './service';
 
 describe(HealthCheckController.name, () => {
   let healthCheckController: HealthCheckController;
+  let app: TestingModule;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    app = await Test.createTestingModule({
+      imports: [DatabaseModule],
       controllers: [HealthCheckController],
       providers: [HealthCheckService],
     }).compile();
@@ -17,9 +20,14 @@ describe(HealthCheckController.name, () => {
     );
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   describe('getStatus', () => {
-    it('should return true', () => {
-      expect(healthCheckController.getStatus()).toBe(true);
+    it('should return true', async () => {
+      const status = await healthCheckController.getStatus();
+      expect(status).toStrictEqual({ app: true, db: true });
     });
   });
 });
