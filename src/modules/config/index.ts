@@ -2,18 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule as BaseConfigModule } from '@nestjs/config';
 
 import { ConfigService } from './services';
-
-function getEnvFileExtension(env?: string) {
-  switch (env) {
-    case 'test':
-      return 'test';
-    case 'production':
-      return 'prod';
-    case 'development':
-    default:
-      return 'dev';
-  }
-}
+import { getEnvFileExtension } from './utils';
 
 @Module({
   imports: [

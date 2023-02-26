@@ -22,7 +22,10 @@
     "env:dev:down": "docker-compose -f docker-compose.dev.yml down",
     "env:dev:restart": "yarn env:dev:down && yarn env:dev:up",
     "env:test:up": "docker-compose -f docker-compose.test.yml up --build",
-    "env:test:down": "docker-compose -f docker-compose.test.yml down"
+    "env:test:down": "docker-compose -f docker-compose.test.yml down",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "db:migration:generate": "yarn typeorm migration:generate src/modules/database/migrations/$FILE_NAME -d src/modules/database/config.ts",
+    "db:migration:run": "yarn typeorm migration:run -d src/modules/database/config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

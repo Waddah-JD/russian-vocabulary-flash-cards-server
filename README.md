@@ -11,6 +11,13 @@ yarn env:dev:down
 yarn env:dev:restart
 ```
 
+### Migrations
+
+```bash
+# generate a migration file
+FILE_NAME=XXX yarn db:migration:generate
+```
+
 ### How to run tests?
 
 ```bash

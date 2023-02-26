@@ -37,3 +37,4 @@ coverage
 # Custom
 .env*
 !.env.example
+TODO.md
