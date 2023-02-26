@@ -26,7 +26,9 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "db:migration:generate": "yarn typeorm migration:generate src/database/migrations/$FILE_NAME -d src/database/config.ts",
     "db:migration:run": "yarn typeorm migration:run -d src/database/config.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "ts-run": "ts-node -r tsconfig-paths/register ",
+    "seed:word-types": "yarn ts-run src/modules/word-types/scripts.ts seed"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -37,7 +39,8 @@
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.12"
+    "typeorm": "^0.3.12",
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
