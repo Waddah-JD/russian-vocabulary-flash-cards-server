@@ -1,4 +1,4 @@
-import { ConfigService } from '@modules/config/service';
+import { ConfigService } from '@modules/config/services';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 

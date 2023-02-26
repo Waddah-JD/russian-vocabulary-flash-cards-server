@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule as BaseConfigModule } from '@nestjs/config';
 
-import { ConfigService } from './service';
+import { ConfigService } from './services';
 
 function getEnvFileExtension(env?: string) {
   switch (env) {
