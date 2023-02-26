@@ -1,8 +1,8 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'word_types' })
 export class WordType {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('int')
   id: number;
 
   @Column({ type: 'varchar', length: 100 })

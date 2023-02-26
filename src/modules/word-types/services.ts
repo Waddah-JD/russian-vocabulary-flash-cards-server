@@ -11,9 +11,9 @@ export class WordTypesService {
     private wordTypesRepository: Repository<WordType>,
   ) {}
 
-  async create(type: string) {
+  async create(id: number, type: string) {
     await this.wordTypesRepository.save(
-      this.wordTypesRepository.create({ type }),
+      this.wordTypesRepository.create({ id, type }),
     );
   }
 }

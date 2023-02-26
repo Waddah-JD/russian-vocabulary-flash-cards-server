@@ -16,6 +16,9 @@ yarn env:dev:restart
 ```bash
 # generate a migration file
 FILE_NAME=XXX yarn db:migration:generate
+
+# run migrations
+yarn db:migration:run
 ```
 
 ### How to run tests?
