@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from 'src/database';
 
+import { DatabaseModule } from '../../database';
 import { HealthCheckController } from './controllers';
 import { HealthCheckService } from './services';
 
