@@ -1,4 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { UseAuthenticationGuard } from '@modules/auth/decorators';
+import { AuthenticatedRequest } from '@modules/auth/types';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 
 import { CreateUserDto } from './schemas';
 import { UsersService } from './services';
@@ -10,5 +12,11 @@ export class UsersController {
   @Post()
   async create(@Body() body: CreateUserDto) {
     await this.usersService.create(body);
+  }
+
+  @UseAuthenticationGuard()
+  @Get('me')
+  async getMe(@Req() req: AuthenticatedRequest) {
+    return await this.usersService.findByIdOrFail(req.user.uid);
   }
 }

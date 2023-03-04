@@ -11,4 +11,10 @@ export interface Config {
     password: string;
     name: string;
   };
+
+  firebase: {
+    projectId: string;
+    clientEmail: string;
+    privateKey: string;
+  };
 }

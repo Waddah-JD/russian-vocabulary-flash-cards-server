@@ -21,6 +21,14 @@ export class ConfigService {
         password: this.baseConfig.get('DB_PASSWORD', ''),
         name: this.baseConfig.get('DB_NAME', ''),
       },
+
+      firebase: {
+        projectId: this.baseConfig.get('FIREBASE_PROJECT_ID', ''),
+        clientEmail: this.baseConfig.get('FIREBASE_CLIENT_EMAIL', ''),
+        privateKey: this.baseConfig
+          .get('FIREBASE_PRIVATE_KEY', '')
+          .replace(/\\n/g, '\n'),
+      },
     };
   }
 }
