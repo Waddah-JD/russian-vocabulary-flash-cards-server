@@ -2,10 +2,17 @@ import { Module } from '@nestjs/common';
 
 import { DatabaseModule } from '../database';
 import { ConfigModule } from './config';
+import { EnglishTranslationsModule } from './english-translations';
 import { HealthCheckModule } from './health-check';
-import { WordTypesModule } from './word-types';
+import { WordsModule } from './words';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, HealthCheckModule, WordTypesModule],
+  imports: [
+    ConfigModule,
+    DatabaseModule,
+    HealthCheckModule,
+    WordsModule,
+    EnglishTranslationsModule,
+  ],
 })
 export class AppModule {}

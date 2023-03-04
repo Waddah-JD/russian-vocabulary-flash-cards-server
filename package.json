@@ -28,7 +28,7 @@
     "db:migration:run": "yarn typeorm migration:run -d src/database/config.ts",
     "prepare": "husky install",
     "ts-run": "ts-node -r tsconfig-paths/register ",
-    "seed:word-types": "yarn ts-run src/modules/word-types/scripts.ts seed"
+    "seed:words": "yarn ts-run src/modules/words/scripts.ts seed"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
