@@ -1,0 +1,11 @@
+export const GenericValidationErrorCodes = {
+  IS_EMPTY: 'IS_EMPTY',
+  IS_LESS_THAN_MIN_LENGTH: 'IS_LESS_THAN_MIN_LENGTH',
+  IS_MORE_THAN_MAX_LENGTH: 'IS_MORE_THAN_MAX_LENGTH',
+  IS_NOT_BOOLEAN: 'IS_NOT_BOOLEAN',
+  IS_NOT_STRING: 'IS_NOT_STRING',
+};
+
+export const UserValidationErrorCodes = {
+  IS_NOT_VALID_EMAIL: 'IS_NOT_VALID_EMAIL',
+};
