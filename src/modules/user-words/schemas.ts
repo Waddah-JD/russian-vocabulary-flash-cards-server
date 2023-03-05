@@ -1,12 +1,12 @@
-import { Word } from '@modules/words/entities';
-import { IsBooleanString, IsEnumValue, IsNumericString } from 'src/validators';
+import { IsOptional } from 'class-validator';
+import {
+  IsBooleanString,
+  IsEnumValue,
+  IsNumericString,
+  IsString,
+} from 'src/validators';
 
 import { ValidLearnBatchSizes } from './types';
-
-export class CreateUserWordBodyDTO {
-  @IsNumericString()
-  wordId: Word['id'];
-}
 
 export class LearnWordsRequestQuery {
   @IsNumericString()
@@ -15,4 +15,10 @@ export class LearnWordsRequestQuery {
 
   @IsBooleanString()
   allowPreviouslyShownWords: string;
+}
+
+export class AddWordToCollectionDTO {
+  @IsOptional()
+  @IsString()
+  notes: string;
 }

@@ -18,15 +18,6 @@ export class UsersWordsService {
     private readonly wordsService: WordsService,
   ) {}
 
-  async create(userId: User['id'], wordId: Word['id']) {
-    const user = await this.usersService.findByIdOrFail(userId);
-    const word = await this.wordsService.findByIdOrFail(wordId);
-
-    await this.usersWordsRepository.save(
-      this.usersWordsRepository.create({ user, word }),
-    );
-  }
-
   private async createMany(userId: User['id'], wordsIds: Word['id'][]) {
     const user = await this.usersService.findByIdOrFail(userId);
     const words = await this.wordsService.getManyByIds(wordsIds);
@@ -93,5 +84,23 @@ export class UsersWordsService {
         { value: userId, property: 'userId' },
       );
     }
+  }
+
+  async addToCollection(
+    userId: User['id'],
+    wordId: Word['id'],
+    notes?: string,
+  ) {
+    await this.usersWordsRepository.update(
+      { word: { id: wordId }, user: { id: userId } },
+      { addedToCollectionAt: new Date(), notes },
+    );
+  }
+
+  async removeFromCollection(userId: User['id'], wordId: Word['id']) {
+    await this.usersWordsRepository.update(
+      { word: { id: wordId }, user: { id: userId } },
+      { addedToCollectionAt: null },
+    );
   }
 }

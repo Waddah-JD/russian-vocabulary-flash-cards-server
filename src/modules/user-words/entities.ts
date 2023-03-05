@@ -16,7 +16,7 @@ export class UsersWords extends DeletableEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User)
   user: User;
 
   @ManyToOne(() => Word, { eager: true })
