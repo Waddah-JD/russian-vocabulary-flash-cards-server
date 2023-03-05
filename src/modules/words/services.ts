@@ -47,7 +47,7 @@ export class WordsService {
     await this.wordsRepository.save(wordEntity);
   }
 
-  async findOneByIdOrFail(id: Word['id']) {
+  async findByIdOrFail(id: Word['id']) {
     // TODO add 404 support
 
     return await this.wordsRepository.findOneByOrFail({ id });

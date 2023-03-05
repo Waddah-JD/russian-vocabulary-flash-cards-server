@@ -13,5 +13,6 @@ import { WordsService } from './services';
   ],
   controllers: [WordsController],
   providers: [WordsService],
+  exports: [WordsService],
 })
 export class WordsModule {}

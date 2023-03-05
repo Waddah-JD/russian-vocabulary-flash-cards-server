@@ -1,5 +1,6 @@
+import { UsersWords } from '@modules/user-words/entities';
 import { DeletableEntity } from 'src/database/extendableEntities';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User extends DeletableEntity {
@@ -11,4 +12,7 @@ export class User extends DeletableEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   lastSignIn: Date | null;
+
+  @OneToMany(() => UsersWords, (userWords) => userWords.user)
+  userWords: UsersWords[];
 }

@@ -8,6 +8,6 @@ export class WordsController {
   constructor(private readonly wordsService: WordsService) {}
   @Get(':id')
   async getOneById(@Param('id') id: number): Promise<Word> {
-    return await this.wordsService.findOneByIdOrFail(id);
+    return await this.wordsService.findByIdOrFail(id);
   }
 }

@@ -10,10 +10,18 @@ export class ValidationFailedException extends BadRequestException {
 }
 
 export class ResourceNotFoundException extends NotFoundException {
-  constructor(entity: string, value: string, property = 'ID') {
+  constructor(
+    entity: string,
+    ...args: { value: string | number; property?: string }[]
+  ) {
     super({
       message: 'Entity Not found',
-      description: `no ${entity} with ${property} = ${value} was not found`,
+      description:
+        args.length > 0
+          ? `No ${entity} with ${args
+              .map(({ property, value }) => `${property || 'ID'} = ${value}`)
+              .join(', ')} was found`
+          : `No ${entity} was found`,
     });
   }
 }

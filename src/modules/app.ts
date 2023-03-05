@@ -6,6 +6,7 @@ import { ConfigModule } from './config';
 import { EnglishTranslationsModule } from './english-translations';
 import { FirebaseModule } from './firebase';
 import { HealthCheckModule } from './health-check';
+import { UsersWordsModule } from './user-words';
 import { UsersModule } from './users';
 import { WordsModule } from './words';
 
@@ -19,6 +20,7 @@ import { WordsModule } from './words';
     UsersModule,
     FirebaseModule,
     AuthModule,
+    UsersWordsModule,
   ],
 })
 export class AppModule {}

@@ -21,7 +21,7 @@ export class UsersService {
     try {
       return await this.usersRepository.findOneByOrFail({ id });
     } catch (error) {
-      throw new ResourceNotFoundException(User.name, id);
+      throw new ResourceNotFoundException(User.name, { value: id });
     }
   }
 }

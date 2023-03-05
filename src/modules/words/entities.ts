@@ -1,4 +1,5 @@
 import { EnglishTranslation } from '@modules/english-translations/entities';
+import { UsersWords } from '@modules/user-words/entities';
 import { WordType } from '@modules/word-types/types';
 import {
   Column,
@@ -7,6 +8,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
@@ -161,4 +163,7 @@ export class Word {
   @ManyToMany(() => EnglishTranslation, { eager: true, onDelete: 'CASCADE' })
   @JoinTable({ name: 'words_english_translations' })
   englishTranslations: EnglishTranslation[];
+
+  @OneToMany(() => UsersWords, (userWords) => userWords.word)
+  userWords: UsersWords[];
 }
