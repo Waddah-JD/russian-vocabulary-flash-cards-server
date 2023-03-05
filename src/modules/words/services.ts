@@ -2,7 +2,7 @@ import { EnglishTranslationsService } from '@modules/english-translations/servic
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 
 import { Noun, Verb, Word } from './entities';
 import { CreateWordDTO } from './types';
@@ -51,5 +51,25 @@ export class WordsService {
     // TODO add 404 support
 
     return await this.wordsRepository.findOneByOrFail({ id });
+  }
+
+  async getRandomWordsNotInIds(ids: Word['id'][], batchSize: number) {
+    const randomIds = await this.wordsRepository
+      .createQueryBuilder('w')
+      .select('w.id')
+      .orderBy('RANDOM()')
+      .take(batchSize)
+      .where({ id: Not(In(ids)) })
+      .getMany();
+
+    return this.wordsRepository.find({
+      where: { id: In(randomIds.map(({ id }) => id)) },
+    });
+  }
+
+  async getManyByIds(wordsIds: Word['id'][]) {
+    return await this.wordsRepository.find({
+      where: { id: In(wordsIds) },
+    });
   }
 }

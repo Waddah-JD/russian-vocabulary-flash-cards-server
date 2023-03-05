@@ -17,5 +17,6 @@ import { UsersWordsService } from './services';
   ],
   controllers: [UsersWordsController],
   providers: [UsersWordsService],
+  exports: [UsersWordsService],
 })
 export class UsersWordsModule {}

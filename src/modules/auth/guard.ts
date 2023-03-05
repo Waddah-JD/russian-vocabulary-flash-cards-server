@@ -1,10 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
-import {
-  ExpiredTokenException,
-  MalformedTokenException,
-  MissingTokenException,
-} from './errors';
+import { ExpiredTokenException, MissingTokenException } from './errors';
 import { AuthService } from './services';
 
 function mapFirebaseAuthToAuthErrors(e: { errorInfo: { code: string } }) {
@@ -12,8 +8,6 @@ function mapFirebaseAuthToAuthErrors(e: { errorInfo: { code: string } }) {
   switch (e.errorInfo.code) {
     case 'auth/id-token-expired':
       throw new ExpiredTokenException();
-    case 'auth/argument-error':
-      throw new MalformedTokenException();
 
     default:
       // TODO catch and handle
