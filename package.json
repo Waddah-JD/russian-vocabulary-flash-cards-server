@@ -94,7 +94,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx,json}": [
+    "**/*.{js,jsx,ts,tsx,json}": [
       "yarn lint:fix",
       "yarn format"
     ]
