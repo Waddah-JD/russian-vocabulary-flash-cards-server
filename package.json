@@ -29,7 +29,8 @@
     "db:migration:run": "yarn typeorm migration:run -d src/database/config.ts",
     "prepare": "husky install",
     "ts-run": "ts-node -r tsconfig-paths/register ",
-    "seed:words": "yarn ts-run src/modules/words/scripts.ts seed"
+    "seed:words": "yarn ts-run src/modules/words/scripts.ts seed",
+    "run-lint-staged": "lint-staged"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -91,17 +92,6 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@modules/(.*)$": "<rootDir>/../src/modules/$1"
-    }
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json}": [
-      "yarn lint:fix",
-      "yarn format"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
     }
   }
 }
