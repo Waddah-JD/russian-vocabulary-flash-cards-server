@@ -1,5 +1,13 @@
+import { IsEnumValue, IsNumericString } from 'src/validators';
+
 import { Noun, Verb, Word } from './entities';
-import { WordGender } from './types';
+import { ValidLearnBatchSizes, WordGender } from './types';
+
+export class LearnWordsRequestQuery {
+  @IsNumericString()
+  @IsEnumValue(ValidLearnBatchSizes)
+  batchSize: number;
+}
 
 function genderCodeToTypeMap(code: 'm' | 'f' | 'n'): WordGender | null {
   switch (code) {

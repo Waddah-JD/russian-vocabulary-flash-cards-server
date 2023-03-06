@@ -14,3 +14,10 @@ export type CreateWordDTO =
   | BaseCreateWordDto
   | CreateNounWordDto
   | CreateVerbWordDto;
+
+export enum ValidLearnBatchSizes {
+  FIVE = '5',
+  TEN = '10',
+  FIFTEEN = '15',
+  TWENTY = '20',
+}

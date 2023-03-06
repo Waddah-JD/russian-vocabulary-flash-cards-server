@@ -7,11 +7,10 @@ import {
   Get,
   Param,
   Post,
-  Query,
   Req,
 } from '@nestjs/common';
 
-import { AddWordToCollectionDTO, LearnWordsRequestQuery } from './schemas';
+import { AddWordToCollectionDTO } from './schemas';
 import { UsersWordsService } from './services';
 
 @Controller('v1/users-words')
@@ -19,20 +18,8 @@ import { UsersWordsService } from './services';
 export class UsersWordsController {
   constructor(private readonly usersWordsService: UsersWordsService) {}
 
-  @UseAuthenticationGuard()
-  @Get('learn')
-  async getWordsForLearning(
-    @Req() req: AuthenticatedRequest,
-    @Query() query: LearnWordsRequestQuery,
-  ) {
-    return await this.usersWordsService.getWordsForLearning(
-      req.user.uid,
-      query.batchSize,
-    );
-  }
-
   @Get(':wordId')
-  async getOne(
+  async getOneWordFromUserCollection(
     @Req() req: AuthenticatedRequest,
     @Param('wordId') wordId: number,
   ) {

@@ -36,33 +36,10 @@ export class UsersWordsService {
       .execute();
   }
 
-  private async getWordsInUserCollection(userId: User['id']) {
-    const query = this.usersWordsRepository
-      .createQueryBuilder('uw')
-      .leftJoinAndSelect('uw.word', 'w')
-      .where('uw.user.id = :userId', { userId })
-      .select(['w', 'uw.id']);
-
-    return await query.getMany();
-  }
-
   private async findByUserIdAndWordId(userId: User['id'], wordId: Word['id']) {
     return await this.usersWordsRepository.findOne({
       where: { user: { id: userId }, word: { id: wordId } },
     });
-  }
-
-  async getWordsForLearning(userId: User['id'], batchSize: number) {
-    const wordsInUserCollection = await this.getWordsInUserCollection(userId);
-
-    const userCollectionsWordsIds = wordsInUserCollection.map(
-      (userWord) => userWord.word.id,
-    );
-
-    return await this.wordsService.getRandomWordsExcludingIds(
-      userCollectionsWordsIds,
-      batchSize,
-    );
   }
 
   async findByUserIdAndWordIdOrFail(userId: User['id'], wordId: Word['id']) {

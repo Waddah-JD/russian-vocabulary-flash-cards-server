@@ -1,8 +1,9 @@
 import { EnglishTranslationsService } from '@modules/english-translations/services';
+import { User } from '@modules/users/entities';
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Not, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 import { Noun, Verb, Word } from './entities';
 import { CreateWordDTO } from './types';
@@ -53,18 +54,22 @@ export class WordsService {
     return await this.wordsRepository.findOneByOrFail({ id });
   }
 
-  async getRandomWordsExcludingIds(ids: Word['id'][], batchSize: number) {
-    const randomIds = await this.wordsRepository
+  async getRandomWordsExcludingWordsInUserCollection(
+    userId: User['id'],
+    batchSize: number,
+  ) {
+    return await this.wordsRepository
       .createQueryBuilder('w')
-      .select('w.id')
+      .where(
+        `w.id NOT IN (SELECT uw."wordId" FROM users_words AS uw WHERE uw."userId" = :userId)`,
+        { userId },
+      )
+      .limit(batchSize)
       .orderBy('RANDOM()')
-      .take(batchSize)
-      .where({ id: Not(In(ids)) })
+      .leftJoinAndSelect('w.verb', 'verb')
+      .leftJoinAndSelect('w.noun', 'noun')
+      .leftJoinAndSelect('w.englishTranslations', 'englishTranslations')
       .getMany();
-
-    return this.wordsRepository.find({
-      where: { id: In(randomIds.map(({ id }) => id)) },
-    });
   }
 
   async getManyByIds(wordsIds: Word['id'][]) {
