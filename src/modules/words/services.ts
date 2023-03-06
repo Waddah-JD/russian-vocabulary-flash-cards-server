@@ -53,7 +53,7 @@ export class WordsService {
     return await this.wordsRepository.findOneByOrFail({ id });
   }
 
-  async getRandomWordsNotInIds(ids: Word['id'][], batchSize: number) {
+  async getRandomWordsExcludingIds(ids: Word['id'][], batchSize: number) {
     const randomIds = await this.wordsRepository
       .createQueryBuilder('w')
       .select('w.id')

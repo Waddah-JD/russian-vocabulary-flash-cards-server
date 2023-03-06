@@ -18,72 +18,66 @@ export class UsersWordsService {
     private readonly wordsService: WordsService,
   ) {}
 
-  private async createMany(userId: User['id'], wordsIds: Word['id'][]) {
+  private async upsert(
+    userId: User['id'],
+    wordsId: Word['id'],
+    notes?: string,
+  ) {
     const user = await this.usersService.findByIdOrFail(userId);
-    const words = await this.wordsService.getManyByIds(wordsIds);
-
-    const entries = words.map((word) => {
-      return { word, user };
-    });
+    const word = await this.wordsService.findByIdOrFail(wordsId);
 
     await this.usersWordsRepository
       .createQueryBuilder()
       .insert()
       .into(UsersWords)
-      .values(entries)
+      .values({ user, word, notes })
+      .orUpdate(['notes', 'updatedAt', 'deletedAt'], ['userId', 'wordId'])
+
       .execute();
   }
 
-  private async getWordsPreviouslyShownToUser(
-    userId: User['id'],
-    onlyInCollection: boolean,
-  ) {
+  private async getWordsInUserCollection(userId: User['id']) {
     const query = this.usersWordsRepository
       .createQueryBuilder('uw')
-      .leftJoinAndSelect('uw.word', 'word')
-      .where('uw.userId = :userId', { userId });
+      .leftJoinAndSelect('uw.word', 'w')
+      .where('uw.user.id = :userId', { userId })
+      .select(['w', 'uw.id']);
 
-    if (onlyInCollection) {
-      query.andWhere('uw.addedToCollectionAt IS NOT NULL');
-    }
-
-    return query.getMany();
+    return await query.getMany();
   }
 
-  async getWordsForLearning(
-    userId: User['id'],
-    batchSize: number,
-    allowPreviouslyShownWords: boolean,
-  ) {
-    const wordsPreviouslyShownToUser = await this.getWordsPreviouslyShownToUser(
-      userId,
-      !allowPreviouslyShownWords,
-    );
-    const ids = wordsPreviouslyShownToUser.map((userWord) => userWord.word.id);
+  private async findByUserIdAndWordId(userId: User['id'], wordId: Word['id']) {
+    return await this.usersWordsRepository.findOne({
+      where: { user: { id: userId }, word: { id: wordId } },
+    });
+  }
 
-    const randomWords = await this.wordsService.getRandomWordsNotInIds(
-      ids,
+  async getWordsForLearning(userId: User['id'], batchSize: number) {
+    const wordsInUserCollection = await this.getWordsInUserCollection(userId);
+
+    const userCollectionsWordsIds = wordsInUserCollection.map(
+      (userWord) => userWord.word.id,
+    );
+
+    return await this.wordsService.getRandomWordsExcludingIds(
+      userCollectionsWordsIds,
       batchSize,
     );
-    const randomWordsIds = randomWords.map(({ id }) => id);
-
-    await this.createMany(userId, randomWordsIds);
-
-    return randomWords;
   }
 
-  async findByIdOrFail(userId: User['id'], wordId: Word['id']) {
-    try {
-      return await this.usersWordsRepository.findOneOrFail({
-        where: { user: { id: userId }, word: { id: wordId } },
-      });
-    } catch (error) {
+  async findByUserIdAndWordIdOrFail(userId: User['id'], wordId: Word['id']) {
+    const foundByUserIdAndWordId = await this.findByUserIdAndWordId(
+      userId,
+      wordId,
+    );
+    if (!foundByUserIdAndWordId) {
       throw new ResourceNotFoundException(
         UsersWords.name,
         { value: wordId, property: 'wordId' },
         { value: userId, property: 'userId' },
       );
     }
+    return foundByUserIdAndWordId;
   }
 
   async addToCollection(
@@ -91,16 +85,13 @@ export class UsersWordsService {
     wordId: Word['id'],
     notes?: string,
   ) {
-    await this.usersWordsRepository.update(
-      { word: { id: wordId }, user: { id: userId } },
-      { addedToCollectionAt: new Date(), notes },
-    );
+    await this.upsert(userId, wordId, notes);
   }
 
   async removeFromCollection(userId: User['id'], wordId: Word['id']) {
-    await this.usersWordsRepository.update(
-      { word: { id: wordId }, user: { id: userId } },
-      { addedToCollectionAt: null },
-    );
+    await this.usersWordsRepository.softDelete({
+      word: { id: wordId },
+      user: { id: userId },
+    });
   }
 }

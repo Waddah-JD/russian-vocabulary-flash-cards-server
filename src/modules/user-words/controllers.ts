@@ -28,7 +28,6 @@ export class UsersWordsController {
     return await this.usersWordsService.getWordsForLearning(
       req.user.uid,
       query.batchSize,
-      query.allowPreviouslyShownWords === 'true',
     );
   }
 
@@ -37,7 +36,10 @@ export class UsersWordsController {
     @Req() req: AuthenticatedRequest,
     @Param('wordId') wordId: number,
   ) {
-    return await this.usersWordsService.findByIdOrFail(req.user.uid, wordId);
+    return await this.usersWordsService.findByUserIdAndWordIdOrFail(
+      req.user.uid,
+      wordId,
+    );
   }
 
   @Post(':wordId')

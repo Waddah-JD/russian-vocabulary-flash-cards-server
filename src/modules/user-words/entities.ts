@@ -24,14 +24,6 @@ export class UsersWords extends DeletableEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   @Index()
-  lastShownToUserAt: Date | null;
-
-  @Column({ type: 'timestamp', nullable: true })
-  @Index()
-  addedToCollectionAt: Date | null;
-
-  @Column({ type: 'timestamp', nullable: true })
-  @Index()
   lastPracticedAt: Date | null;
 
   @Column({ type: 'int', nullable: true })
