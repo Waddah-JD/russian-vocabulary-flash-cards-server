@@ -4,10 +4,13 @@ import { Word } from '@modules/words/entities';
 import { WordsService } from '@modules/words/services';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { uniqBy } from 'lodash';
 import { ResourceNotFoundException } from 'src/errors';
 import { Repository } from 'typeorm';
 
 import { UsersWords } from './entities';
+import { ValidPracticeBatchSizes } from './types';
+import { getPracticeWordsDistribution } from './utils';
 
 @Injectable()
 export class UsersWordsService {
@@ -42,6 +45,49 @@ export class UsersWordsService {
     });
   }
 
+  private async getWordsNotPracticedRecently(
+    userId: User['id'],
+    itemsCount: number,
+  ): Promise<UsersWords[]> {
+    return await this.usersWordsRepository.find({
+      where: { user: { id: userId } },
+      order: { lastPracticedAt: 'ASC' },
+      take: itemsCount,
+    });
+  }
+
+  private async getWordsWithLowestScore(
+    userId: User['id'],
+    itemsCount: number,
+  ): Promise<UsersWords[]> {
+    const wordsWitBadScore = await this.usersWordsRepository.find({
+      where: { user: { id: userId } },
+      order: { failedPracticeCount: 'ASC' },
+      take: itemsCount,
+    });
+    console.log('wordsWitBadScore', wordsWitBadScore);
+    return wordsWitBadScore;
+  }
+
+  private async getRandomWordsFromUserCollectionExcludingIds(
+    userId: User['id'],
+    itemsCount: number,
+    ids: Word['id'][],
+  ): Promise<UsersWords[]> {
+    const randomWords = await this.usersWordsRepository
+      .createQueryBuilder('uw')
+      .where('uw."userId" = :userId', { userId })
+      .andWhere(`uw."wordId" NOT IN (${ids.join(',')})`)
+      .limit(itemsCount)
+      .orderBy('RANDOM()')
+      .leftJoinAndSelect('uw.word', 'word')
+      .leftJoinAndSelect('word.verb', 'verb')
+      .leftJoinAndSelect('word.noun', 'noun')
+      .leftJoinAndSelect('word.englishTranslations', 'englishTranslations')
+      .getMany();
+    return randomWords;
+  }
+
   async findByUserIdAndWordIdOrFail(userId: User['id'], wordId: Word['id']) {
     const foundByUserIdAndWordId = await this.findByUserIdAndWordId(
       userId,
@@ -70,5 +116,32 @@ export class UsersWordsService {
       word: { id: wordId },
       user: { id: userId },
     });
+  }
+
+  async getWordsForPractice(
+    userId: User['id'],
+    batchSize: ValidPracticeBatchSizes,
+  ): Promise<UsersWords[]> {
+    const practiceWordsDistribution = getPracticeWordsDistribution(batchSize);
+    const wordsNotPracticedLately = await this.getWordsNotPracticedRecently(
+      userId,
+      practiceWordsDistribution.notPracticedRecently,
+    );
+    const wordsWithLowestScore = await this.getWordsWithLowestScore(
+      userId,
+      practiceWordsDistribution.lowScore,
+    );
+    const words = uniqBy(
+      [...wordsNotPracticedLately, ...wordsWithLowestScore],
+      'id',
+    );
+    const wordsIds = words.map((it) => it.word.id);
+
+    const randomWordsCount = batchSize - words.length;
+    return await this.getRandomWordsFromUserCollectionExcludingIds(
+      userId,
+      randomWordsCount,
+      wordsIds,
+    );
   }
 }

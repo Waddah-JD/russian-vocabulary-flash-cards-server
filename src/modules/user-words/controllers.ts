@@ -7,16 +7,29 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 
-import { AddWordToCollectionDTO } from './schemas';
+import { AddWordToCollectionDTO, PracticeWordsRequestQuery } from './schemas';
 import { UsersWordsService } from './services';
 
 @Controller('v1/users-words')
 @UseAuthenticationGuard()
 export class UsersWordsController {
   constructor(private readonly usersWordsService: UsersWordsService) {}
+
+  @Get('practice')
+  @UseAuthenticationGuard()
+  async getWordsForPractice(
+    @Req() req: AuthenticatedRequest,
+    @Query() query: PracticeWordsRequestQuery,
+  ) {
+    return await this.usersWordsService.getWordsForPractice(
+      req.user.uid,
+      query.batchSize,
+    );
+  }
 
   @Get(':wordId')
   async getOneWordFromUserCollection(
