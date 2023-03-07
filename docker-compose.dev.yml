@@ -13,11 +13,5 @@ services:
     volumes:
       - russian_vocabulary_flash_cards_dev_db:/var/lib/postgresql/data
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
 volumes:
   russian_vocabulary_flash_cards_dev_db:
