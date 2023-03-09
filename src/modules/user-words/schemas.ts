@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
-import { IsEnumValue, IsNumber, IsString } from 'src/validators';
+import { IsBoolean, IsEnumValue, IsNumber, IsString } from 'src/validators';
 
 import { ValidPracticeBatchSizes } from './types';
 
@@ -15,4 +15,9 @@ export class PracticeWordsRequestQuery {
   @IsEnumValue(ValidPracticeBatchSizes)
   @Transform(({ value }) => +value)
   batchSize: ValidPracticeBatchSizes;
+}
+
+export class PracticeWordResult {
+  @IsBoolean()
+  successful: boolean;
 }

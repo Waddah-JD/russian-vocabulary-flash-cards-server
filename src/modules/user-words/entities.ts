@@ -26,13 +26,13 @@ export class UsersWords extends DeletableEntity {
   @Index()
   lastPracticedAt: Date | null;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int', default: 0 })
   @Index()
-  successfulPracticeCount: number | null;
+  successfulPracticeCount: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int', default: 0 })
   @Index()
-  failedPracticeCount: number | null;
+  failedPracticeCount: number;
 
   @Column({ type: 'varchar', nullable: true })
   notes: string | null;

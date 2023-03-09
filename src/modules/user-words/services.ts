@@ -60,6 +60,7 @@ export class UsersWordsService {
     userId: User['id'],
     itemsCount: number,
   ): Promise<UsersWords[]> {
+    // TODO probably should take into consideration failed/success ratio instead of absolute failed
     const wordsWitBadScore = await this.usersWordsRepository.find({
       where: { user: { id: userId } },
       order: { failedPracticeCount: 'ASC' },
@@ -143,5 +144,28 @@ export class UsersWordsService {
       randomWordsCount,
       wordsIds,
     );
+  }
+
+  async submitPracticeResult(
+    userId: User['id'],
+    wordId: Word['id'],
+    successful: boolean,
+  ) {
+    await this.findByUserIdAndWordIdOrFail(userId, wordId);
+
+    const fieldToUpdate: keyof UsersWords = successful
+      ? 'successfulPracticeCount'
+      : 'failedPracticeCount';
+
+    return await this.usersWordsRepository
+      .createQueryBuilder()
+      .update()
+      .where(`"userId" = :userId`, { userId })
+      .andWhere(`"wordId" = :wordId`, { wordId })
+      .set({
+        [fieldToUpdate]: () => `"${fieldToUpdate}" + 1`,
+        lastPracticedAt: new Date(),
+      })
+      .execute();
   }
 }

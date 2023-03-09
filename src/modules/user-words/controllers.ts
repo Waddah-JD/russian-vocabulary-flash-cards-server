@@ -7,11 +7,16 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
 } from '@nestjs/common';
 
-import { AddWordToCollectionDTO, PracticeWordsRequestQuery } from './schemas';
+import {
+  AddWordToCollectionDTO,
+  PracticeWordResult,
+  PracticeWordsRequestQuery,
+} from './schemas';
 import { UsersWordsService } from './services';
 
 @Controller('v1/users-words')
@@ -28,6 +33,20 @@ export class UsersWordsController {
     return await this.usersWordsService.getWordsForPractice(
       req.user.uid,
       query.batchSize,
+    );
+  }
+
+  @Put('/practice/:wordId')
+  @UseAuthenticationGuard()
+  async submitPracticeResult(
+    @Req() req: AuthenticatedRequest,
+    @Param('wordId') wordId: number,
+    @Body() query: PracticeWordResult,
+  ) {
+    await this.usersWordsService.submitPracticeResult(
+      req.user.uid,
+      wordId,
+      query.successful,
     );
   }
 
