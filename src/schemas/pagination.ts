@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 import { IsNumericString, IsString } from 'src/validators';
+import { IsDependantOnProperty } from 'src/validators/dependant';
 
 export class PaginatedSearchQuery {
   @IsString()
@@ -8,10 +9,12 @@ export class PaginatedSearchQuery {
 
   @IsOptional()
   @IsNumericString()
+  @IsDependantOnProperty('perPage')
   page?: number;
 
   @IsOptional()
   @IsNumericString()
+  @IsDependantOnProperty('page')
   perPage?: number;
 
   @Expose()
