@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly firebase: FirebaseService) {}
+  constructor(private firebase: FirebaseService) {}
 
   async decodeAuthToken(accessToken: string) {
     return await this.firebase.getAuthInstance().verifyIdToken(accessToken);

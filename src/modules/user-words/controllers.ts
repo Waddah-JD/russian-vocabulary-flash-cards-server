@@ -22,7 +22,7 @@ import { UsersWordsService } from './services';
 @Controller('v1/users-words')
 @UseAuthenticationGuard()
 export class UsersWordsController {
-  constructor(private readonly usersWordsService: UsersWordsService) {}
+  constructor(private usersWordsService: UsersWordsService) {}
 
   @Get('practice')
   @UseAuthenticationGuard()

@@ -8,7 +8,7 @@ import { WordsService } from './services';
 
 @Controller('v1/words')
 export class WordsController {
-  constructor(private readonly wordsService: WordsService) {}
+  constructor(private wordsService: WordsService) {}
 
   @UseAuthenticationGuard()
   @Get('learn')

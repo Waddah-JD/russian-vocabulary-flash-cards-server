@@ -16,9 +16,9 @@ import { getPracticeWordsDistribution } from './utils';
 export class UsersWordsService {
   constructor(
     @InjectRepository(UsersWords)
-    private readonly usersWordsRepository: Repository<UsersWords>,
-    private readonly usersService: UsersService,
-    private readonly wordsService: WordsService,
+    private usersWordsRepository: Repository<UsersWords>,
+    private usersService: UsersService,
+    private wordsService: WordsService,
   ) {}
 
   private async upsert(

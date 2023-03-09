@@ -6,7 +6,7 @@ import { getAuth } from 'firebase-admin/auth';
 
 @Injectable()
 export class FirebaseService {
-  constructor(private readonly config: ConfigService) {
+  constructor(private config: ConfigService) {
     admin.initializeApp({
       credential: cert({
         projectId: this.config.getConfig().firebase.projectId,

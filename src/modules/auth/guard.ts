@@ -17,7 +17,7 @@ function mapFirebaseAuthToAuthErrors(e: { errorInfo: { code: string } }) {
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
