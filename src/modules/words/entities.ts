@@ -160,8 +160,14 @@ export class Word {
   @JoinColumn()
   verb: Verb;
 
-  @ManyToMany(() => EnglishTranslation, { eager: true, onDelete: 'CASCADE' })
-  @JoinTable({ name: 'words_english_translations' })
+  @ManyToMany(
+    () => EnglishTranslation,
+    (englishTranslation) => englishTranslation.words,
+    { eager: true, onDelete: 'CASCADE' },
+  )
+  @JoinTable({
+    name: 'words_english_translations',
+  })
   englishTranslations: EnglishTranslation[];
 
   @OneToMany(() => UsersWords, (userWords) => userWords.word)
