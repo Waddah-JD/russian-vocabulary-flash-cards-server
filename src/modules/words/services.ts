@@ -3,6 +3,7 @@ import { User } from '@modules/users/entities';
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginatedSearchQueryResponse } from 'src/schemas/pagination';
 import { In, Repository } from 'typeorm';
 
 import { Noun, Verb, Word } from './entities';
@@ -76,5 +77,24 @@ export class WordsService {
     return await this.wordsRepository.find({
       where: { id: In(wordsIds) },
     });
+  }
+
+  async searchByWord(wordLike: string, limit?: number, skip?: number) {
+    const query = this.wordsRepository
+      .createQueryBuilder('w')
+      .where(`w.word LIKE '${wordLike}%'`)
+      .leftJoinAndSelect('w.verb', 'verb')
+      .leftJoinAndSelect('w.noun', 'noun')
+      .leftJoinAndSelect('w.englishTranslations', 'englishTranslations');
+
+    if (limit) {
+      query.take(limit);
+    }
+
+    if (skip) {
+      query.skip(skip);
+    }
+    const manyAndCountTuple = await query.getManyAndCount();
+    return new PaginatedSearchQueryResponse(manyAndCountTuple);
   }
 }

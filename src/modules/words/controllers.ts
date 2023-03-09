@@ -1,6 +1,10 @@
 import { UseAuthenticationGuard } from '@modules/auth/decorators';
 import { AuthenticatedRequest } from '@modules/auth/types';
 import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import {
+  PaginatedSearchQuery,
+  PaginatedSearchQueryResponse,
+} from 'src/schemas/pagination';
 
 import { Word } from './entities';
 import { LearnWordsRequestQuery } from './schemas';
@@ -15,10 +19,21 @@ export class WordsController {
   async getWordsForLearning(
     @Req() req: AuthenticatedRequest,
     @Query() query: LearnWordsRequestQuery,
-  ) {
+  ): Promise<Word[]> {
     return await this.wordsService.getRandomWordsExcludingWordsInUserCollection(
       req.user.uid,
       query.batchSize,
+    );
+  }
+
+  @Get('search')
+  async search(
+    @Query() query: PaginatedSearchQuery,
+  ): Promise<PaginatedSearchQueryResponse<Word>> {
+    return await this.wordsService.searchByWord(
+      query.search,
+      query.perPage,
+      query.skip,
     );
   }
 
