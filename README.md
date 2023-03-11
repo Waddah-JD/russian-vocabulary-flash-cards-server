@@ -30,3 +30,19 @@ yarn env:test:up
 # run e2e tests
 yarn test:e2e
 ```
+
+### First Run
+
+```bash
+# start test environment
+yarn env:dev:up
+
+# install dependencies
+yarn install
+
+# run migrations
+yarn db:migration:run
+
+# seed data
+yarn seed
+```

@@ -2,7 +2,7 @@
   "name": "russian-vocabulary-flash-cards-server",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Waddah",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -30,6 +30,7 @@
     "prepare": "husky install",
     "ts-run": "ts-node -r tsconfig-paths/register ",
     "seed:words": "yarn ts-run src/modules/words/scripts.ts seed",
+    "seed": "yarn seed:words",
     "run-lint-staged": "lint-staged"
   },
   "dependencies": {
