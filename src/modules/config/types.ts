@@ -17,4 +17,11 @@ export interface Config {
     clientEmail: string;
     privateKey: string;
   };
+
+  cache: {
+    host: string;
+    port: number;
+    password: string;
+    ttl: number;
+  };
 }

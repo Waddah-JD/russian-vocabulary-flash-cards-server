@@ -29,6 +29,13 @@ export class ConfigService {
           .get('FIREBASE_PRIVATE_KEY', '')
           .replace(/\\n/g, '\n'),
       },
+
+      cache: {
+        host: this.baseConfig.get('REDIS_HOST', ''),
+        port: this.baseConfig.get('REDIS_PORT', 6379),
+        password: this.baseConfig.get('REDIS_PASSWORD', ''),
+        ttl: this.baseConfig.get('CACHE_TTL', 1000),
+      },
     };
   }
 }
