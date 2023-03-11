@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  CacheInterceptor,
+  Controller,
+  Get,
+  Param,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   PaginatedSearchQuery,
   PaginatedSearchQueryResponse,
@@ -22,6 +29,7 @@ export class EnglishTranslationController {
     );
   }
 
+  @UseInterceptors(CacheInterceptor)
   @Get(':id')
   async getOneById(@Param('id') id: number): Promise<EnglishTranslation> {
     return await this.englishTranslationsService.findOneByIdOrFail(id);
