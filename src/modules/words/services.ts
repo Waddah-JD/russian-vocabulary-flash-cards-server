@@ -3,6 +3,7 @@ import { User } from '@modules/users/entities';
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ResourceNotFoundException } from 'src/errors';
 import { PaginatedSearchQueryResponse } from 'src/schemas/pagination';
 import { In, Repository } from 'typeorm';
 
@@ -50,9 +51,11 @@ export class WordsService {
   }
 
   async findByIdOrFail(id: Word['id']) {
-    // TODO add 404 support
-
-    return await this.wordsRepository.findOneByOrFail({ id });
+    try {
+      return await this.wordsRepository.findOneByOrFail({ id });
+    } catch (error) {
+      throw new ResourceNotFoundException(Word.name, { value: id });
+    }
   }
 
   async getRandomWordsExcludingWordsInUserCollection(
