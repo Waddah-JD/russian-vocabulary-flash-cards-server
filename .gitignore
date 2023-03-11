@@ -39,4 +39,12 @@ coverage
 !.env.example
 TODO.md
 seed/
-.yarn/
+
+# Yarn config
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
