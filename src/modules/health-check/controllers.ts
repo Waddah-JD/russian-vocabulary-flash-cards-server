@@ -3,7 +3,7 @@ import { Controller, Get } from '@nestjs/common';
 import { HealthCheckService } from './services';
 import { HealthCheckResult } from './types';
 
-@Controller('health-check')
+@Controller('v1/health-check')
 export class HealthCheckController {
   constructor(private healthCheckService: HealthCheckService) {}
 

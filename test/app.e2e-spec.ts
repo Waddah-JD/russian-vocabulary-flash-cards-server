@@ -19,16 +19,16 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  describe('/health-check', () => {
+  describe('/v1/health-check', () => {
     it('/status (GET)', () => {
       return request(app.getHttpServer())
-        .get('/health-check/status')
+        .get('/v1/health-check/status')
         .expect(200)
         .expect(JSON.stringify({ app: true, db: true }));
     });
   });
 
-  describe('/words', () => {
+  describe('/v1/words', () => {
     it('/:id (GET)', () => {
       return request(app.getHttpServer())
         .get('/v1/words/2')
