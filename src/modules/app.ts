@@ -1,4 +1,6 @@
 import { CacheModule, Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { redisStore } from 'cache-manager-ioredis-yet';
 
 import { DatabaseModule } from '../database';
@@ -29,6 +31,16 @@ import { WordsModule } from './words';
       },
       isGlobal: true,
     }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          ttl: configService.getConfig().rateLimiter.ttl,
+          limit: configService.getConfig().rateLimiter.limit,
+        };
+      },
+    }),
     ConfigModule,
     DatabaseModule,
     HealthCheckModule,
@@ -38,6 +50,12 @@ import { WordsModule } from './words';
     FirebaseModule,
     AuthModule,
     UsersWordsModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}

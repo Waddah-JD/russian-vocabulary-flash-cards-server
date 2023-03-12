@@ -36,6 +36,11 @@ export class ConfigService {
         password: this.baseConfig.get('REDIS_PASSWORD', ''),
         ttl: this.baseConfig.get('CACHE_TTL', 1000),
       },
+
+      rateLimiter: {
+        ttl: this.baseConfig.get('RATE_LIMITER_TTL', 60),
+        limit: this.baseConfig.get('RATE_LIMITER_LIMIT', 10),
+      },
     };
   }
 }

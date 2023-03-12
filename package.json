@@ -38,6 +38,7 @@
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/throttler": "^4.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "cache-manager": "^5.1.7",
     "cache-manager-ioredis-yet": "^1.1.0",

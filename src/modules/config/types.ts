@@ -24,4 +24,9 @@ export interface Config {
     password: string;
     ttl: number;
   };
+
+  rateLimiter: {
+    ttl: number;
+    limit: number;
+  };
 }
