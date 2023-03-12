@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: main-test
+      POSTGRES_DB: main
     ports:
       - 5432:5432
 
@@ -15,6 +15,6 @@ services:
     image: 'bitnami/redis:latest'
     restart: always
     environment:
-      REDIS_PASSWORD: mBdbh^jfhAOC0d
+      REDIS_PASSWORD: redis
     ports:
       - 6379:6379

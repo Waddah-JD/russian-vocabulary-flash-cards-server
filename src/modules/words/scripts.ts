@@ -13,7 +13,7 @@ import { WordsService } from './services';
 import { CreateWordDTO } from './types';
 
 yargs
-  .command('seed', 'Seed word types data', async () => {
+  .command('seed', 'Seed Words', async () => {
     const app = await NestFactory.createApplicationContext(AppModule);
     const wordTypesService = app.get(WordsService);
 
@@ -33,14 +33,36 @@ yargs
         try {
           await wordTypesService.create(dto);
         } catch (error) {
-          console.log('==============================================');
-          console.log(dto);
-          console.log('==============================================');
-          console.log(error);
-          console.log('==============================================');
+          console.error(error);
         }
       }
     }
     await app.close();
   })
+
+  .command('seed-test-words', 'Seed Words for TESTS', async () => {
+    const app = await NestFactory.createApplicationContext(AppModule);
+    const wordTypesService = app.get(WordsService);
+
+    const data = await readSeedDataFile<any>(`test`);
+
+    for (const word of data) {
+      let dto: CreateWordDTO;
+      if (word.partOfSpeech === WordType.VERB) {
+        dto = CreateVerbWordDto.fromRawSeedFormat(word);
+      } else if (word.partOfSpeech === WordType.NOUN) {
+        dto = CreateNounWordDto.fromRawSeedFormat(word);
+      } else {
+        dto = BaseCreateWordDto.fromRawSeedFormat(word);
+      }
+
+      try {
+        await wordTypesService.create(dto);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    await app.close();
+  })
+
   .parse();

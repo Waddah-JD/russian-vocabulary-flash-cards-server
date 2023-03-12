@@ -34,11 +34,16 @@ coverage
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Custom
+### Custom ###
+
 .env*
 !.env.example
+
 TODO.md
-seed/
+
+# all files in seed dir except test.json
+seed/*
+!seed/test.json
 
 # Yarn config
 .yarn/*

@@ -21,7 +21,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --runInBand --detectOpenHandles --forceExit",
     "env:dev:up": "docker-compose -f docker-compose.dev.yml up --build",
     "env:dev:down": "docker-compose -f docker-compose.dev.yml down",
-    "env:dev:restart": "yarn env:dev:down && yarn env:dev:up",
     "env:test:up": "docker-compose -f docker-compose.test.yml up --build",
     "env:test:up:detached": "yarn env:test:up -d",
     "env:test:down": "docker-compose -f docker-compose.test.yml down",
@@ -31,6 +30,7 @@
     "prepare": "husky install",
     "ts-run": "ts-node -r tsconfig-paths/register ",
     "seed:words": "yarn ts-run src/modules/words/scripts.ts seed",
+    "seed:test-words": "NODE_ENV=test && yarn ts-run src/modules/words/scripts.ts seed-test-words",
     "seed": "yarn seed:words",
     "run-lint-staged": "lint-staged"
   },

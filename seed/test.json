@@ -1,0 +1,139 @@
+[
+  {
+    "rank": 1,
+    "word": "и",
+    "partOfSpeech": "conjunction",
+    "translations": ["and", "and then", "and so"],
+    "pronunciation": "i",
+    "accented": "и"
+  },
+  {
+    "rank": 2,
+    "word": "в",
+    "partOfSpeech": "preposition",
+    "translations": ["in", "at"],
+    "pronunciation": "v",
+    "accented": "в"
+  },
+  {
+    "rank": 3,
+    "word": "не",
+    "partOfSpeech": "particle",
+    "translations": ["not", "no", "no", "without"],
+    "pronunciation": "ne",
+    "accented": "не"
+  },
+  {
+    "rank": 94,
+    "word": "слово",
+    "partOfSpeech": "noun",
+    "translations": ["word", "term"],
+    "declension": {
+      "nominative": { "singular": "сло́во", "plural": "слова́" },
+      "genitive": { "singular": "сло́ва", "plural": "сло́в" },
+      "dative": { "singular": "сло́ву", "plural": "слова́м" },
+      "accusative": { "singular": "сло́во", "plural": "слова́" },
+      "instrumental": { "singular": "сло́вом", "plural": "слова́ми" },
+      "prepositional": { "singular": "сло́ве", "plural": "слова́х" }
+    },
+    "pronunciation": "slóvo",
+    "gender": "n",
+    "inanimate": true
+  },
+  {
+    "rank": 155,
+    "word": "спросить",
+    "partOfSpeech": "verb",
+    "translations": ["to ask"],
+    "isImperfective": false,
+    "pronunciation": "sprosítʹ",
+    "conjugation": {
+      "past": {
+        "masculine": "спроси́л",
+        "feminine": "спроси́ла",
+        "neuter": "спроси́ло",
+        "plural": "спроси́ли"
+      },
+      "present": {},
+      "future": {
+        "singular1st": "спрошу́",
+        "singular2nd": "спро́сишь",
+        "singular3rd": "спро́сит",
+        "plural1st": "спро́сим",
+        "plural2nd": "спро́сите",
+        "plural3rd": "спро́сят"
+      },
+      "imperative": { "singular": "спроси́", "plural": "спроси́те" }
+    },
+    "infinitive": "спроси́ть"
+  },
+  {
+    "rank": 503,
+    "word": "просить",
+    "partOfSpeech": "verb",
+    "translations": ["to ask", "to beg"],
+    "isImperfective": true,
+    "pronunciation": "prosítʹ",
+    "conjugation": {
+      "past": {
+        "masculine": "проси́л",
+        "feminine": "проси́ла",
+        "neuter": "проси́ло",
+        "plural": "проси́ли"
+      },
+      "present": {
+        "singular1st": "прошу́",
+        "singular2nd": "про́сишь",
+        "singular3rd": "про́сит",
+        "plural1st": "про́сим",
+        "plural2nd": "про́сите",
+        "plural3rd": "про́сят"
+      },
+      "future": {},
+      "imperative": { "singular": "проси́", "plural": "проси́те" }
+    },
+    "infinitive": "проси́ть"
+  },
+  {
+    "rank": 5021,
+    "word": "образовательный",
+    "partOfSpeech": "adjective",
+    "translations": ["(in)formative", "educational"],
+    "pronunciation": "obrazovátelʹnyj",
+    "accented": "образова́тельный"
+  },
+  {
+    "rank": 10002,
+    "word": "королевство",
+    "partOfSpeech": "noun",
+    "translations": ["kingdom", "realm"],
+    "declension": {
+      "nominative": { "singular": "короле́вство", "plural": "короле́вства" },
+      "genitive": { "singular": "короле́вства", "plural": "короле́вств" },
+      "dative": { "singular": "короле́вству", "plural": "короле́вствам" },
+      "accusative": { "singular": "короле́вство", "plural": "короле́вства" },
+      "instrumental": { "singular": "короле́вством", "plural": "короле́вствами" },
+      "prepositional": { "singular": "короле́встве", "plural": "короле́вствах" }
+    },
+    "pronunciation": "korolévstvo",
+    "gender": "n",
+    "inanimate": true
+  },
+  {
+    "rank": 20000,
+    "word": "тюлень",
+    "partOfSpeech": "noun",
+    "translations": ["seal"],
+    "declension": {
+      "nominative": { "singular": "тюле́нь", "plural": "тюле́ни" },
+      "genitive": { "singular": "тюле́ня", "plural": "тюле́ней" },
+      "dative": { "singular": "тюле́ню", "plural": "тюле́ням" },
+      "accusative": { "singular": "тюле́ня", "plural": "тюле́ней" },
+      "instrumental": { "singular": "тюле́нем", "plural": "тюле́нями" },
+      "prepositional": { "singular": "тюле́не", "plural": "тюле́нях" }
+    },
+    "pronunciation": "tjulénʹ",
+    "gender": "m",
+    "inanimate": false
+  }
+]

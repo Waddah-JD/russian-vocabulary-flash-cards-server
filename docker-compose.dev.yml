@@ -17,7 +17,7 @@ services:
     image: 'bitnami/redis:latest'
     restart: always
     environment:
-      REDIS_PASSWORD: PPmfrw_lXjge1r
+      REDIS_PASSWORD: redis
     ports:
       - 6379:6379
 
