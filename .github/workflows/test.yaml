@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Run Environment
-        run: yarn env:test:up
+        run: yarn env:test:up:detached
       - name: Run Migrations
         run: yarn db:migration:run
       - name: Seeding Database

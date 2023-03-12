@@ -23,6 +23,7 @@
     "env:dev:down": "docker-compose -f docker-compose.dev.yml down",
     "env:dev:restart": "yarn env:dev:down && yarn env:dev:up",
     "env:test:up": "docker-compose -f docker-compose.test.yml up --build",
+    "env:test:up:detached": "yarn env:test:up -d",
     "env:test:down": "docker-compose -f docker-compose.test.yml down",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "db:migration:generate": "yarn typeorm migration:generate src/database/migrations/$FILE_NAME -d src/database/config.ts",
