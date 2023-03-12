@@ -39,7 +39,6 @@ yargs
     }
     await app.close();
   })
-
   .command('seed-test-words', 'Seed Words for TESTS', async () => {
     const app = await NestFactory.createApplicationContext(AppModule);
     const wordTypesService = app.get(WordsService);
@@ -64,5 +63,4 @@ yargs
     }
     await app.close();
   })
-
   .parse();

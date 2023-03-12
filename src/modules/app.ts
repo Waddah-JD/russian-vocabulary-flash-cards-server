@@ -2,7 +2,6 @@ import { DatabaseModule } from '@database/index';
 import { CacheModule, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { redisStore } from 'cache-manager-ioredis-yet';
 
 import { AuthModule } from './auth';
 import { ConfigModule } from './config';
@@ -16,20 +15,10 @@ import { WordsModule } from './words';
 
 @Module({
   imports: [
-    CacheModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        return {
-          store: redisStore,
-          host: configService.getConfig().cache.host,
-          port: configService.getConfig().cache.port,
-          password: configService.getConfig().cache.password,
-          ttl: configService.getConfig().cache.ttl,
-          db: 0,
-        };
-      },
+    CacheModule.register({
       isGlobal: true,
+      ttl: 24 * 60 * 60 * 1000, // 1 Day (cache-manager v5 uses ms)
+      max: 100,
     }),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],

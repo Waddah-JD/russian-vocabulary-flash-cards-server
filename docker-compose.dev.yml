@@ -13,13 +13,5 @@ services:
     volumes:
       - russian_vocabulary_flash_cards_dev_db:/var/lib/postgresql/data
 
-  cache:
-    image: 'bitnami/redis:latest'
-    restart: always
-    environment:
-      REDIS_PASSWORD: redis
-    ports:
-      - 6379:6379
-
 volumes:
   russian_vocabulary_flash_cards_dev_db:
