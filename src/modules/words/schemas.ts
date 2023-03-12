@@ -1,5 +1,5 @@
+import { IsEnumValue, IsNumber } from '@validators/index';
 import { Transform } from 'class-transformer';
-import { IsEnumValue, IsNumber } from 'src/validators';
 
 import { Noun, Verb, Word } from './entities';
 import { ValidLearnBatchSizes, WordGender } from './types';

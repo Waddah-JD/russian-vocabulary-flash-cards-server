@@ -1,6 +1,6 @@
+import { IsBoolean, IsEnumValue, IsNumber, IsString } from '@validators/index';
 import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
-import { IsBoolean, IsEnumValue, IsNumber, IsString } from 'src/validators';
 
 import { ValidPracticeBatchSizes } from './types';
 

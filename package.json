@@ -97,7 +97,12 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@modules/(.*)$": "<rootDir>/../src/modules/$1"
+      "^@database/(.*)$": "<rootDir>/../src/database/$1",
+      "^@errors/(.*)$": "<rootDir>/../src/errors/$1",
+      "^@modules/(.*)$": "<rootDir>/../src/modules/$1",
+      "^@schemas/(.*)$": "<rootDir>/../src/schemas/$1",
+      "^@utils/(.*)$": "<rootDir>/../src/utils/$1",
+      "^@validators/(.*)$": "<rootDir>/../src/validators/$1"
     }
   },
   "packageManager": "yarn@3.4.1"

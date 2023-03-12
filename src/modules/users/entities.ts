@@ -1,5 +1,5 @@
+import { DeletableEntity } from '@database/extendableEntities';
 import { UsersWords } from '@modules/user-words/entities';
-import { DeletableEntity } from 'src/database/extendableEntities';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'users' })

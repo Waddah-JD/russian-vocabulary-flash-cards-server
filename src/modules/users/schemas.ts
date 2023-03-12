@@ -1,4 +1,4 @@
-import { IsEmail, IsFirebaseUid } from 'src/validators/users';
+import { IsEmail, IsFirebaseUid } from '@validators/users';
 
 import { User } from './entities';
 

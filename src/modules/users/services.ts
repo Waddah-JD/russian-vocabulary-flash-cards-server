@@ -1,6 +1,6 @@
+import { ResourceNotFoundException } from '@errors/index';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResourceNotFoundException } from 'src/errors';
 import { Repository } from 'typeorm';
 
 import { User } from './entities';

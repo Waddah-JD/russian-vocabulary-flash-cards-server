@@ -5,11 +5,9 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    env_file:
-      - .env.dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: main
     ports:
       - 5432:5432
     volumes:
@@ -19,9 +17,7 @@ services:
     image: 'bitnami/redis:latest'
     restart: always
     environment:
-      REDIS_MASTER_PASSWORD: ${REDIS_PASSWORD}
-    env_file:
-      - .env.dev
+      REDIS_PASSWORD: PPmfrw_lXjge1r
     ports:
       - 6379:6379
 

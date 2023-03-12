@@ -1,6 +1,6 @@
+import { UserValidationErrorCodes } from '@errors/codes';
 import { applyDecorators } from '@nestjs/common';
 import { IsEmail as _IsEmail } from 'class-validator';
-import { UserValidationErrorCodes } from 'src/errors/codes';
 
 import { IsLongerOrEqualTo, IsString } from './index';
 

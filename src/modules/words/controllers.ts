@@ -12,7 +12,7 @@ import {
 import {
   PaginatedSearchQuery,
   PaginatedSearchQueryResponse,
-} from 'src/schemas/pagination';
+} from '@schemas/pagination';
 
 import { Word } from './entities';
 import { LearnWordsRequestQuery } from './schemas';

@@ -1,3 +1,4 @@
+import { ResourceNotFoundException } from '@errors/index';
 import { User } from '@modules/users/entities';
 import { UsersService } from '@modules/users/services';
 import { Word } from '@modules/words/entities';
@@ -5,7 +6,6 @@ import { WordsService } from '@modules/words/services';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { uniqBy } from 'lodash';
-import { ResourceNotFoundException } from 'src/errors';
 import { Repository } from 'typeorm';
 
 import { UsersWords } from './entities';

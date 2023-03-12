@@ -9,7 +9,7 @@ import {
 import {
   PaginatedSearchQuery,
   PaginatedSearchQueryResponse,
-} from 'src/schemas/pagination';
+} from '@schemas/pagination';
 
 import { EnglishTranslation } from './entities';
 import { EnglishTranslationsService } from './services';

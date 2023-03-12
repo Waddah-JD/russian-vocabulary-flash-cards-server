@@ -1,3 +1,4 @@
+import { GenericValidationErrorCodes } from '@errors/codes';
 import { applyDecorators } from '@nestjs/common';
 import {
   IsBoolean as _IsBoolean,
@@ -10,7 +11,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { GenericValidationErrorCodes } from 'src/errors/codes';
 
 export function IsMandatory() {
   return applyDecorators(

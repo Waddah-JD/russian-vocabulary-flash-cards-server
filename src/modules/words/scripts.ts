@@ -1,7 +1,7 @@
 import { AppModule } from '@modules/app';
 import { WordType } from '@modules/word-types/types';
 import { NestFactory } from '@nestjs/core';
-import { readSeedDataFile } from 'src/utils/files';
+import { readSeedDataFile } from '@utils/files';
 import * as yargs from 'yargs';
 
 import {

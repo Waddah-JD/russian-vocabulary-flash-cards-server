@@ -1,7 +1,7 @@
+import { ResourceNotFoundException } from '@errors/index';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResourceNotFoundException } from 'src/errors';
-import { PaginatedSearchQueryResponse } from 'src/schemas/pagination';
+import { PaginatedSearchQueryResponse } from '@schemas/pagination';
 import { Repository } from 'typeorm';
 
 import { EnglishTranslation } from './entities';

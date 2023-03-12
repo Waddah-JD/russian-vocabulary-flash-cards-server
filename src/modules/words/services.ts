@@ -1,10 +1,10 @@
+import { ResourceNotFoundException } from '@errors/index';
 import { EnglishTranslationsService } from '@modules/english-translations/services';
 import { User } from '@modules/users/entities';
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResourceNotFoundException } from 'src/errors';
-import { PaginatedSearchQueryResponse } from 'src/schemas/pagination';
+import { PaginatedSearchQueryResponse } from '@schemas/pagination';
 import { In, Repository } from 'typeorm';
 
 import { Noun, Verb, Word } from './entities';

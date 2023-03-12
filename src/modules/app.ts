@@ -1,9 +1,9 @@
+import { DatabaseModule } from '@database/index';
 import { CacheModule, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { redisStore } from 'cache-manager-ioredis-yet';
 
-import { DatabaseModule } from '../database';
 import { AuthModule } from './auth';
 import { ConfigModule } from './config';
 import { ConfigService } from './config/services';

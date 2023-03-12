@@ -1,7 +1,7 @@
+import { IsDependantOnProperty } from '@validators/dependant';
+import { IsNumericString, IsString } from '@validators/index';
 import { Expose } from 'class-transformer';
 import { IsOptional } from 'class-validator';
-import { IsNumericString, IsString } from 'src/validators';
-import { IsDependantOnProperty } from 'src/validators/dependant';
 
 export class PaginatedSearchQuery {
   @IsString()

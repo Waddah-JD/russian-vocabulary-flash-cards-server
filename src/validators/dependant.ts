@@ -1,3 +1,4 @@
+import { GenericValidationErrorCodes } from '@errors/codes';
 import {
   registerDecorator,
   ValidationArguments,
@@ -5,7 +6,6 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { isNil } from 'lodash';
-import { GenericValidationErrorCodes } from 'src/errors/codes';
 
 @ValidatorConstraint({ async: false })
 class DependantOnProperty<T> implements ValidatorConstraintInterface {

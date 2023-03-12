@@ -1,6 +1,6 @@
+import { DeletableEntity } from '@database/extendableEntities';
 import { User } from '@modules/users/entities';
 import { Word } from '@modules/words/entities';
-import { DeletableEntity } from 'src/database/extendableEntities';
 import {
   Column,
   Entity,
