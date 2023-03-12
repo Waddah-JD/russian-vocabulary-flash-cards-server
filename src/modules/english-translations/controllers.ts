@@ -14,7 +14,7 @@ import {
 import { EnglishTranslation } from './entities';
 import { EnglishTranslationsService } from './services';
 
-@Controller('v1/english-transitions')
+@Controller('v1/english-translations')
 export class EnglishTranslationController {
   constructor(private englishTranslationsService: EnglishTranslationsService) {}
 
