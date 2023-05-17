@@ -46,3 +46,7 @@ yarn db:migration:run
 # seed data
 yarn seed
 ```
+
+## Deploy
+
+this repo is a submodule in https://github.com/Waddah-JD/russian-vocabulary-flash-cards, all deployments happen on parent repo
