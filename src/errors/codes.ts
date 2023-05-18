@@ -13,4 +13,5 @@ export const GenericValidationErrorCodes = {
 
 export const UserValidationErrorCodes = {
   IS_NOT_VALID_EMAIL: 'IS_NOT_VALID_EMAIL',
+  USER_ALREADY_EXISTS: 'USER_ALREADY_EXISTS',
 };

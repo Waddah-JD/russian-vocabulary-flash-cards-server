@@ -1,11 +1,6 @@
-import { IsEmail, IsFirebaseUid } from '@validators/users';
+import { IsString } from '@validators/index';
 
-import { User } from './entities';
-
-export class CreateUserDto {
-  @IsFirebaseUid()
-  id: User['id'];
-
-  @IsEmail()
-  email: User['email'];
+export class CreateUserByIdTokenDto {
+  @IsString()
+  idToken: string;
 }

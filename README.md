@@ -1,3 +1,20 @@
+## Run
+
+### Development Mode
+
+```bash
+# start develop environment
+yarn env:dev:up
+
+# first-run commands
+yarn install
+yarn db:migration:run
+yarn seed
+
+# run
+yarn start:dev
+```
+
 ### Useful Commands
 
 ```bash
