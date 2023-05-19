@@ -7,7 +7,7 @@ import { getEnvFileExtension } from './utils';
 @Module({
   imports: [
     BaseConfigModule.forRoot({
-      envFilePath: [`.env.${getEnvFileExtension(process.env.NODE_ENV)}`],
+      envFilePath: [`.env${getEnvFileExtension(process.env.NODE_ENV)}`],
     }),
   ],
   providers: [ConfigService],

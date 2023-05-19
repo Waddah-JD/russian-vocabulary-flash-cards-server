@@ -8,6 +8,7 @@ export class ConfigService {
   constructor(private baseConfig: BaseConfigService) {}
 
   getConfig(): Config {
+    console.log(this.baseConfig);
     return {
       environment: this.baseConfig.get('NODE_ENV', 'development'),
       port: this.baseConfig.get('PORT', 3000),

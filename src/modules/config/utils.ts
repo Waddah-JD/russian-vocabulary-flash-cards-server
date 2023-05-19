@@ -1,9 +1,9 @@
-export function getEnvFileExtension(env?: string) {
+export function getEnvFileExtension(env: string) {
   switch (env) {
     case 'test':
-      return 'test';
+      return '.test';
     case 'development':
-      return 'dev';
+      return '.dev';
     case 'production':
     default:
       return '';
