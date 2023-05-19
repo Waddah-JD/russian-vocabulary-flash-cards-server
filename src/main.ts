@@ -6,7 +6,11 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationFailedException } from './errors';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const corsWhiteListEnvs = ['development', 'test'];
+  const app = await NestFactory.create(AppModule, {
+    cors: corsWhiteListEnvs.includes(process.env.NODE_ENV),
+  });
+  app.setGlobalPrefix('api');
 
   const PORT = app.get(ConfigService).getConfig().port;
 
