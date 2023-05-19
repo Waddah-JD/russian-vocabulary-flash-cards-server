@@ -7,6 +7,7 @@ import { ValidationFailedException } from './errors';
 
 async function bootstrap() {
   // TODO should disable CORS on production (there are a couple of public-facing endpoints though)?
+  // maybe exclude public-facing endpoints from CORS
   const app = await NestFactory.create(AppModule, { cors: true });
 
   const PORT = app.get(ConfigService).getConfig().port;
