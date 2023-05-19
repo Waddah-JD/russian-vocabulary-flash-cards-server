@@ -6,8 +6,11 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationFailedException } from './errors';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // TODO should disable CORS on production (there are a couple of public-facing endpoints though)?
+  const app = await NestFactory.create(AppModule, { cors: true });
+
   const PORT = app.get(ConfigService).getConfig().port;
+
   app.useGlobalPipes(
     new ValidationPipe({
       skipMissingProperties: false,
