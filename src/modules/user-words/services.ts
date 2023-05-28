@@ -5,7 +5,7 @@ import { Word } from '@modules/words/entities';
 import { WordsService } from '@modules/words/services';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { uniqBy } from 'lodash';
+import { shuffle, uniqBy } from 'lodash';
 import { Repository } from 'typeorm';
 
 import { UsersWords } from './entities';
@@ -61,13 +61,11 @@ export class UsersWordsService {
     itemsCount: number,
   ): Promise<UsersWords[]> {
     // TODO probably should take into consideration failed/success ratio instead of absolute failed
-    const wordsWitBadScore = await this.usersWordsRepository.find({
+    return await this.usersWordsRepository.find({
       where: { user: { id: userId } },
       order: { failedPracticeCount: 'ASC' },
       take: itemsCount,
     });
-    console.log('wordsWitBadScore', wordsWitBadScore);
-    return wordsWitBadScore;
   }
 
   private async getRandomWordsFromUserCollectionExcludingIds(
@@ -124,14 +122,17 @@ export class UsersWordsService {
     batchSize: ValidPracticeBatchSizes,
   ): Promise<UsersWords[]> {
     const practiceWordsDistribution = getPracticeWordsDistribution(batchSize);
+
     const wordsNotPracticedLately = await this.getWordsNotPracticedRecently(
       userId,
       practiceWordsDistribution.notPracticedRecently,
     );
+
     const wordsWithLowestScore = await this.getWordsWithLowestScore(
       userId,
       practiceWordsDistribution.lowScore,
     );
+
     const words = uniqBy(
       [...wordsNotPracticedLately, ...wordsWithLowestScore],
       'id',
@@ -139,11 +140,17 @@ export class UsersWordsService {
     const wordsIds = words.map((it) => it.word.id);
 
     const randomWordsCount = batchSize - words.length;
-    return await this.getRandomWordsFromUserCollectionExcludingIds(
+    const randomWords = await this.getRandomWordsFromUserCollectionExcludingIds(
       userId,
       randomWordsCount,
       wordsIds,
     );
+
+    return shuffle([
+      ...wordsNotPracticedLately,
+      ...wordsWithLowestScore,
+      ...randomWords,
+    ]);
   }
 
   async submitPracticeResult(
