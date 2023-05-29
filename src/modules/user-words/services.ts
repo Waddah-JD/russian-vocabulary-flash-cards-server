@@ -61,11 +61,23 @@ export class UsersWordsService {
     itemsCount: number,
   ): Promise<UsersWords[]> {
     // TODO probably should take into consideration failed/success ratio instead of absolute failed
-    return await this.usersWordsRepository.find({
-      where: { user: { id: userId } },
-      order: { failedPracticeCount: 'ASC' },
-      take: itemsCount,
-    });
+    const query = this.usersWordsRepository
+      .createQueryBuilder('uw')
+      .leftJoinAndSelect('uw.word', 'word')
+      .leftJoinAndSelect('word.verb', 'verb')
+      .leftJoinAndSelect('word.noun', 'noun')
+      .leftJoinAndSelect('word.englishTranslations', 'englishTranslations')
+      .where('uw."userId" = :userId', { userId })
+      .addSelect(
+        'uw.failedPracticeCount - uw.successfulPracticeCount',
+        'failedAttempts',
+      )
+      .distinctOn(['uw.id', 'uw.lastPracticedAt', '"failedAttempts"'])
+      .orderBy('"failedAttempts"', 'DESC')
+      .addOrderBy('uw.lastPracticedAt', 'ASC')
+      .limit(itemsCount);
+
+    return query.getMany();
   }
 
   private async getRandomWordsFromUserCollectionExcludingIds(
