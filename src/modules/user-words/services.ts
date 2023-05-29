@@ -87,16 +87,16 @@ export class UsersWordsService {
   ): Promise<UsersWords[]> {
     const randomWords = await this.usersWordsRepository
       .createQueryBuilder('uw')
-      .where('uw."userId" = :userId', { userId })
-      .andWhere(`uw."wordId" NOT IN (${ids.join(',')})`)
-      .limit(itemsCount)
-      .orderBy('RANDOM()')
       .leftJoinAndSelect('uw.word', 'word')
       .leftJoinAndSelect('word.verb', 'verb')
       .leftJoinAndSelect('word.noun', 'noun')
       .leftJoinAndSelect('word.englishTranslations', 'englishTranslations')
+      .where('uw."userId" = :userId', { userId })
+      .andWhere(`uw."wordId" NOT IN (${ids.join(',')})`)
+      .orderBy('RANDOM()')
       .getMany();
-    return randomWords;
+
+    return randomWords.slice(0, itemsCount);
   }
 
   async findByUserIdAndWordIdOrFail(userId: User['id'], wordId: Word['id']) {
@@ -145,24 +145,22 @@ export class UsersWordsService {
       practiceWordsDistribution.lowScore,
     );
 
-    const words = uniqBy(
+    const notPracticedLatelyAndLowestScoreWords = uniqBy(
       [...wordsNotPracticedLately, ...wordsWithLowestScore],
       'id',
     );
-    const wordsIds = words.map((it) => it.word.id);
+    const notPracticedLatelyAndLowestScoreWordsIds =
+      notPracticedLatelyAndLowestScoreWords.map((it) => it.word.id);
 
-    const randomWordsCount = batchSize - words.length;
+    const randomWordsCount =
+      batchSize - notPracticedLatelyAndLowestScoreWords.length;
     const randomWords = await this.getRandomWordsFromUserCollectionExcludingIds(
       userId,
       randomWordsCount,
-      wordsIds,
+      notPracticedLatelyAndLowestScoreWordsIds,
     );
 
-    return shuffle([
-      ...wordsNotPracticedLately,
-      ...wordsWithLowestScore,
-      ...randomWords,
-    ]);
+    return shuffle([...notPracticedLatelyAndLowestScoreWords, ...randomWords]);
   }
 
   async submitPracticeResult(
