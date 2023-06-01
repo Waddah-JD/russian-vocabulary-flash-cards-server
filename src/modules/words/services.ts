@@ -58,7 +58,7 @@ export class WordsService {
     }
   }
 
-  async getRandomWordsExcludingWordsInUserCollection(
+  private async getRandomWordsExcludingWordsIdsInUserCollection(
     userId: User['id'],
     batchSize: number,
   ) {
@@ -70,10 +70,20 @@ export class WordsService {
       )
       .limit(batchSize)
       .orderBy('RANDOM()')
-      .leftJoinAndSelect('w.verb', 'verb')
-      .leftJoinAndSelect('w.noun', 'noun')
-      .leftJoinAndSelect('w.englishTranslations', 'englishTranslations')
+      .select('w.id')
       .getMany();
+  }
+
+  async getRandomWordsExcludingWordsInUserCollection(
+    userId: User['id'],
+    batchSize: number,
+  ) {
+    const ids = await this.getRandomWordsExcludingWordsIdsInUserCollection(
+      userId,
+      batchSize,
+    );
+
+    return await this.getManyByIds(ids.map(({ id }) => id));
   }
 
   async getManyByIds(wordsIds: Word['id'][]) {
