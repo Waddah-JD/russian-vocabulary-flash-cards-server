@@ -85,16 +85,19 @@ export class UsersWordsService {
     itemsCount: number,
     ids: Word['id'][],
   ): Promise<UsersWords[]> {
-    const randomWords = await this.usersWordsRepository
+    const query = this.usersWordsRepository
       .createQueryBuilder('uw')
       .leftJoinAndSelect('uw.word', 'word')
       .leftJoinAndSelect('word.verb', 'verb')
       .leftJoinAndSelect('word.noun', 'noun')
       .leftJoinAndSelect('word.englishTranslations', 'englishTranslations')
-      .where('uw."userId" = :userId', { userId })
-      .andWhere(`uw."wordId" NOT IN (${ids.join(',')})`)
-      .orderBy('RANDOM()')
-      .getMany();
+      .where('uw."userId" = :userId', { userId });
+
+    if (ids.length > 0) {
+      query.andWhere(`uw."wordId" NOT IN (${ids.join(',')})`);
+    }
+
+    const randomWords = await query.orderBy('RANDOM()').getMany();
 
     return randomWords.slice(0, itemsCount);
   }

@@ -1,3 +1,7 @@
+## Usage
+
+to use the production app, please visit https://vocabulary-flashcards.ru/
+
 ## Run
 
 ### Development Mode
