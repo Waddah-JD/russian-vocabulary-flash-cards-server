@@ -22,6 +22,33 @@ export class WordsService {
     private englishTranslationsService: EnglishTranslationsService,
   ) {}
 
+  private getFindOneByIdQuery(id: Word['id']) {
+    const query = this.wordsRepository
+      .createQueryBuilder('w')
+      .where('w.id = :id', { id })
+      .leftJoinAndSelect('w.verb', 'verb')
+      .leftJoinAndSelect('w.noun', 'noun')
+      .leftJoinAndSelect('w.englishTranslations', 'englishTranslations');
+
+    return query;
+  }
+
+  private async getRandomWordsExcludingWordsIdsInUserCollection(
+    userId: User['id'],
+    batchSize: number,
+  ) {
+    return await this.wordsRepository
+      .createQueryBuilder('w')
+      .where(
+        `w.id NOT IN (SELECT uw."wordId" FROM users_words AS uw WHERE uw."userId" = :userId)`,
+        { userId },
+      )
+      .limit(batchSize)
+      .orderBy('RANDOM()')
+      .select('w.id')
+      .getMany();
+  }
+
   async create(word: CreateWordDTO) {
     const englishTranslationsEntities = [];
     for (const translation of word.englishTranslations) {
@@ -50,28 +77,12 @@ export class WordsService {
     await this.wordsRepository.save(wordEntity);
   }
 
-  async findByIdOrFail(id: Word['id']) {
-    try {
-      return await this.wordsRepository.findOneByOrFail({ id });
-    } catch (error) {
+  async findByIdOrFail(id: Word['id']): Promise<Word> {
+    const foundWord = await this.getFindOneByIdQuery(id).getOne();
+    if (!foundWord) {
       throw new ResourceNotFoundException(Word.name, { value: id });
     }
-  }
-
-  private async getRandomWordsExcludingWordsIdsInUserCollection(
-    userId: User['id'],
-    batchSize: number,
-  ) {
-    return await this.wordsRepository
-      .createQueryBuilder('w')
-      .where(
-        `w.id NOT IN (SELECT uw."wordId" FROM users_words AS uw WHERE uw."userId" = :userId)`,
-        { userId },
-      )
-      .limit(batchSize)
-      .orderBy('RANDOM()')
-      .select('w.id')
-      .getMany();
+    return foundWord;
   }
 
   async getRandomWordsExcludingWordsInUserCollection(
