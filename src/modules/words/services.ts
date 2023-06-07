@@ -1,5 +1,6 @@
 import { ResourceNotFoundException } from '@errors/index';
 import { EnglishTranslationsService } from '@modules/english-translations/services';
+import { UsersWords } from '@modules/user-words/entities';
 import { User } from '@modules/users/entities';
 import { WordType } from '@modules/word-types/types';
 import { Injectable } from '@nestjs/common';
@@ -22,13 +23,23 @@ export class WordsService {
     private englishTranslationsService: EnglishTranslationsService,
   ) {}
 
-  private getFindOneByIdQuery(id: Word['id']) {
+  private getFindOneByIdQuery(id: Word['id'], userId?: User['id']) {
     const query = this.wordsRepository
       .createQueryBuilder('w')
       .where('w.id = :id', { id })
       .leftJoinAndSelect('w.verb', 'verb')
       .leftJoinAndSelect('w.noun', 'noun')
       .leftJoinAndSelect('w.englishTranslations', 'englishTranslations');
+
+    if (userId) {
+      query.leftJoinAndMapOne(
+        'w.collectionEntry',
+        UsersWords,
+        'userWords',
+        'userWords.user.id = :userId AND userWords.word.id = :id',
+        { userId, id },
+      );
+    }
 
     return query;
   }
@@ -77,8 +88,8 @@ export class WordsService {
     await this.wordsRepository.save(wordEntity);
   }
 
-  async findByIdOrFail(id: Word['id']): Promise<Word> {
-    const foundWord = await this.getFindOneByIdQuery(id).getOne();
+  async findByIdOrFail(id: Word['id'], userId?: User['id']): Promise<Word> {
+    const foundWord = await this.getFindOneByIdQuery(id, userId).getOne();
     if (!foundWord) {
       throw new ResourceNotFoundException(Word.name, { value: id });
     }

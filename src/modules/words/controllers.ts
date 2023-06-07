@@ -1,18 +1,11 @@
 import { UseAuthenticationGuard } from '@modules/auth/decorators';
 import { AuthenticatedRequest } from '@modules/auth/types';
-import {
-  CacheInterceptor,
-  Controller,
-  Get,
-  Param,
-  Query,
-  Req,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import {
   PaginatedSearchQuery,
   PaginatedSearchQueryResponse,
 } from '@schemas/pagination';
+import { RequestWithUserId } from 'src/types';
 
 import { Word } from './entities';
 import { LearnWordsRequestQuery } from './schemas';
@@ -45,9 +38,13 @@ export class WordsController {
     );
   }
 
-  @UseInterceptors(CacheInterceptor)
   @Get(':id')
-  async getOneById(@Param('id') id: number): Promise<Word> {
-    return await this.wordsService.findByIdOrFail(id);
+  async getOneById(
+    @Req() req: RequestWithUserId,
+    @Param('id') id: number,
+  ): Promise<Word> {
+    const userId = req.userId;
+
+    return await this.wordsService.findByIdOrFail(id, userId);
   }
 }
