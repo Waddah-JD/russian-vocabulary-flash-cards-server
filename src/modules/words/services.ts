@@ -27,8 +27,8 @@ export class WordsService {
     const query = this.wordsRepository
       .createQueryBuilder('w')
       .where('w.id = :id', { id })
-      .leftJoinAndSelect('w.verb', 'verb')
       .leftJoinAndSelect('w.noun', 'noun')
+      .leftJoinAndSelect('w.verb', 'verb')
       .leftJoinAndSelect('w.englishTranslations', 'englishTranslations');
 
     if (userId) {
