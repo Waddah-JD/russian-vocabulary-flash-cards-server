@@ -7,8 +7,8 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ExtractUserIdFromTokenMiddleware } from 'src/middleware/ExtractUserIdFromToken';
 
+import { ExtractUserIdFromTokenMiddleware } from '../../middleware/ExtractUserIdFromToken';
 import { WordsController } from './controllers';
 import { Noun, Verb, Word } from './entities';
 import { WordsService } from './services';
